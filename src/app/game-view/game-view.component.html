@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="top">Fel: {{nrWrong}} Rätt: {{nrCorrect}}</div>
+    <div class="main">
+        <div class="hint false" (click)="clickFalse()">F</div>
+        <!-- <button class="false" (click)="clickFalse()">F</button> -->
+        <mat-card appearance="outlined" class="game-card"
+        cdkDrag cdkDragLockAxis="x" [style.transform]="dragTransform" (cdkDragMoved)="dragMoved($event)"
+        (cdkDragEnded)="dragEnd($event)">
+            <mat-card-content class="vcenter">{{currentStatmentString}}</mat-card-content>
+        </mat-card>
+        <div class="hint true" (click)="clickTrue()">R</div>
+        <!-- <button class="true" (click)="clickTrue()">R</button> -->
+    </div>
+    <div class="bottom">Kvar: {{numberOfStatementsLeft()}}</div>
+</div>

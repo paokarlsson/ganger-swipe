@@ -1,0 +1,77 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgb(128, 126, 121);
+
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    height: 100%;
+    width: 100%;
+}
+
+.top {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: auto;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+}
+
+.bottom {
+    font-weight: bold;
+    font-size: 2rem;
+    margin: auto;
+}
+
+.game-card {
+    background-color: rgb(255, 222, 92);
+    width: 300px;
+    height: 300px;
+    border: 0px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 2rem;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    z-index: 1;
+}
+
+.hint {
+    margin: auto;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    opacity: 0.7;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    z-index: 0;
+}
+
+button {
+    border: 0px;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.true {
+    background-color: rgb(42, 166, 42);
+    width: 100%;
+}
+
+.false {
+    background-color: rgb(224, 69, 69);
+    width: 100%;
+}
+
+.vcenter {
+    background-color: inherit;
+    margin: auto;
+}

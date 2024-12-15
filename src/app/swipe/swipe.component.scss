@@ -1,0 +1,44 @@
+.card-container {
+    position: relative;
+    margin: 0; /* Remove default margins */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #f5f5f5; /* Optional background color */
+  }
+.card {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: solid 1px #ccc;
+    // cursor: move;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(226, 255, 82);
+    border-radius: 8px;
+    pointer-events: auto;
+    transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+                0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+  
+//   .example-box:active {
+//     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+//                 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+//                 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+//   }
+  
+.card:not(.active) {
+    opacity: 1; /* Gör ej aktiva kort transparenta */
+    cursor: not-allowed;
+  user-select: none;
+  }
+  
+  .card.active {
+    transform: none;
+    opacity: 1
+  }
