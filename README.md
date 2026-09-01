@@ -34,6 +34,6 @@ Deployen sker automatiskt via `.github/workflows/deploy.yml` vid varje push till
 `main` (och kan köras manuellt med "Run workflow"). Workflowen kör `npm ci` och
 `npm run build`, och publicerar `dist/math-teacher/browser`.
 
-Kräver att **Settings → Pages → Source** står på **GitHub Actions**. Den gamla
-metoden — att bygga lokalt och checka in resultatet i `docs/` — behövs inte
-längre när det är omställt.
+**Settings → Pages → Source** står på **GitHub Actions**. Bygget behöver alltså
+inte checkas in — det tidigare `docs/`-upplägget, där resultatet av `ng build`
+kopierades in för hand, är borttaget.
