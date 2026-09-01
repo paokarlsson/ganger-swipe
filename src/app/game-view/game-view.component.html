@@ -27,9 +27,8 @@
         </section>
     } @else {
         <section class="main">
-            <button type="button" class="hint hint--false" (click)="answer(false)"
-                [style.opacity]="0.55 + 0.45 * strength(-1)" [disabled]="locked"
-                aria-label="Svara att påståendet är fel">F</button>
+            <button type="button" class="answer-key answer-key--false"
+                (click)="answer(false)" [disabled]="locked">Svara: påståendet är fel</button>
 
             <div class="card-slot" cdkDrag cdkDragLockAxis="x" [cdkDragDisabled]="locked"
                 [class.is-instant]="instant" (cdkDragMoved)="dragMoved($event)"
@@ -44,9 +43,8 @@
                 </mat-card>
             </div>
 
-            <button type="button" class="hint hint--true" (click)="answer(true)"
-                [style.opacity]="0.55 + 0.45 * strength(1)" [disabled]="locked"
-                aria-label="Svara att påståendet är rätt">R</button>
+            <button type="button" class="answer-key answer-key--true"
+                (click)="answer(true)" [disabled]="locked">Svara: påståendet är rätt</button>
         </section>
     }
 
