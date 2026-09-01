@@ -4,7 +4,20 @@
         <span class="score score--wrong">Fel {{nrWrong}}</span>
     </header>
 
-    @if (finished) {
+    @if (loading) {
+        <section class="result">
+            <mat-card appearance="outlined" class="game-card result-card">
+                <p class="result-title">Laddar frågor…</p>
+            </mat-card>
+        </section>
+    } @else if (loadError) {
+        <section class="result">
+            <mat-card appearance="outlined" class="game-card result-card">
+                <p class="result-title">Kunde inte ladda frågorna</p>
+                <p class="result-score">Kontrollera nätet och ladda om sidan.</p>
+            </mat-card>
+        </section>
+    } @else if (finished) {
         <section class="result">
             <mat-card appearance="outlined" class="game-card result-card">
                 <p class="result-title">Klart!</p>
@@ -38,7 +51,9 @@
     }
 
     <footer class="bottom" aria-live="polite">
-        @if (feedback) {
+        @if (loading || loadError) {
+            &nbsp;
+        } @else if (feedback) {
             <span class="feedback" [class.feedback--wrong]="!feedback.correct">
                 @if (feedback.correct) { Rätt! } @else { Fel — {{feedback.solution}} }
             </span>

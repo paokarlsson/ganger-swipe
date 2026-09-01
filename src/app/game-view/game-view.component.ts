@@ -1,6 +1,7 @@
-import { Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CdkDrag, CdkDragEnd, CdkDragMove } from '@angular/cdk/drag-drop';
+import { QuestionService, Statement } from '../services/question.service';
 
 /** Hur länge kortet flyger ut innan nästa fråga läggs fram. */
 const LEAVE_MS = 260;
@@ -31,6 +32,8 @@ export class GameViewComponent implements OnDestroy {
   nrWrong = 0;
   finished = false;
   feedback: Feedback | undefined;
+  loading = true;
+  loadError = false;
 
   /** -1 helt åt vänster, 0 i vila, +1 helt åt höger. Driver all dragrespons. */
   progress = 0;
@@ -39,6 +42,8 @@ export class GameViewComponent implements OnDestroy {
   /** Stänger av övergångar i det ögonblick nästa kort läggs på plats. */
   instant = false;
 
+  private readonly questionService = inject(QuestionService);
+  private allQuestions: readonly Statement[] = [];
   private deck: Statement[] = [];
   private n1 = 0;
   private n2 = 0;
@@ -47,7 +52,17 @@ export class GameViewComponent implements OnDestroy {
   private feedbackTimer?: ReturnType<typeof setTimeout>;
 
   constructor() {
-    this.restart();
+    this.questionService.getQuestions().subscribe({
+      next: (questions) => {
+        this.allQuestions = questions;
+        this.loading = false;
+        this.restart();
+      },
+      error: () => {
+        this.loading = false;
+        this.loadError = true;
+      },
+    });
   }
 
   ngOnDestroy(): void {
@@ -80,7 +95,7 @@ export class GameViewComponent implements OnDestroy {
   restart(): void {
     clearTimeout(this.advanceTimer);
     clearTimeout(this.feedbackTimer);
-    this.deck = this.shuffle(this.firstLevel);
+    this.deck = this.shuffle(this.allQuestions);
     this.nrCorrect = 0;
     this.nrWrong = 0;
     this.finished = false;
@@ -230,225 +245,4 @@ export class GameViewComponent implements OnDestroy {
     }
     return out;
   }
-
-  private readonly firstLevel: readonly Statement[] = [
-    {
-      rank: 1,
-      number1: 0,
-      number2: 0,
-      answer: 0,
-      wrongs: [],
-    },
-    {
-      rank: 2,
-      number1: 0,
-      number2: 1,
-      answer: 0,
-      wrongs: [1],
-    },
-    {
-      rank: 3,
-      number1: 0,
-      number2: 2,
-      answer: 0,
-      wrongs: [2],
-    },
-    {
-      rank: 4,
-      number1: 0,
-      number2: 3,
-      answer: 0,
-      wrongs: [3],
-    },
-    {
-      rank: 5,
-      number1: 0,
-      number2: 4,
-      answer: 0,
-      wrongs: [4],
-    },
-    {
-      rank: 6,
-      number1: 0,
-      number2: 5,
-      answer: 0,
-      wrongs: [5],
-    },
-    {
-      rank: 7,
-      number1: 0,
-      number2: 6,
-      answer: 0,
-      wrongs: [6],
-    },
-    {
-      rank: 8,
-      number1: 0,
-      number2: 7,
-      answer: 0,
-      wrongs: [7],
-    },
-    {
-      rank: 9,
-      number1: 0,
-      number2: 8,
-      answer: 0,
-      wrongs: [8],
-    },
-    {
-      rank: 10,
-      number1: 0,
-      number2: 9,
-      answer: 0,
-      wrongs: [9],
-    },
-    {
-      rank: 11,
-      number1: 0,
-      number2: 10,
-      answer: 0,
-      wrongs: [10],
-    },
-    {
-      rank: 12,
-      number1: 1,
-      number2: 0,
-      answer: 0,
-      wrongs: [1],
-    },
-    {
-      rank: 13,
-      number1: 1,
-      number2: 1,
-      answer: 1,
-      wrongs: [0],
-    },
-    {
-      rank: 14,
-      number1: 1,
-      number2: 2,
-      answer: 2,
-      wrongs: [1],
-    },
-    {
-      rank: 15,
-      number1: 1,
-      number2: 3,
-      answer: 3,
-      wrongs: [1],
-    },
-    {
-      rank: 16,
-      number1: 1,
-      number2: 4,
-      answer: 4,
-      wrongs: [1],
-    },
-    {
-      rank: 17,
-      number1: 1,
-      number2: 5,
-      answer: 5,
-      wrongs: [1],
-    },
-    {
-      rank: 18,
-      number1: 1,
-      number2: 6,
-      answer: 6,
-      wrongs: [1],
-    },
-    {
-      rank: 19,
-      number1: 1,
-      number2: 7,
-      answer: 7,
-      wrongs: [1],
-    },
-    {
-      rank: 20,
-      number1: 1,
-      number2: 8,
-      answer: 8,
-      wrongs: [1],
-    },
-    {
-      rank: 21,
-      number1: 1,
-      number2: 9,
-      answer: 9,
-      wrongs: [1],
-    },
-    {
-      rank: 22,
-      number1: 1,
-      number2: 10,
-      answer: 10,
-      wrongs: [1],
-    },
-    {
-      rank: 23,
-      number1: 2,
-      number2: 0,
-      answer: 0,
-      wrongs: [2],
-    },
-    {
-      rank: 24,
-      number1: 2,
-      number2: 1,
-      answer: 2,
-      wrongs: [1],
-    },
-    {
-      rank: 25,
-      number1: 2,
-      number2: 2,
-      answer: 4,
-      wrongs: [2],
-    },
-    {
-      rank: 26,
-      number1: 2,
-      number2: 3,
-      answer: 6,
-      wrongs: [5],
-    },
-    {
-      rank: 27,
-      number1: 2,
-      number2: 4,
-      answer: 8,
-      wrongs: [6],
-    },
-    {
-      rank: 28,
-      number1: 2,
-      number2: 5,
-      answer: 10,
-      wrongs: [8],
-    },
-    {
-      rank: 29,
-      number1: 2,
-      number2: 6,
-      answer: 12,
-      wrongs: [10],
-    },
-    {
-      rank: 30,
-      number1: 2,
-      number2: 7,
-      answer: 14,
-      wrongs: [12],
-    },
-  ];
-}
-
-export interface Statement {
-  rank: number;
-  number1: number;
-  number2: number;
-  answer: number;
-  wrongs: number[];
 }
