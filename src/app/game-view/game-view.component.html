@@ -1,15 +1,49 @@
 <div class="container">
-    <div class="top">Fel: {{nrWrong}} Rätt: {{nrCorrect}}</div>
-    <div class="main">
-        <div class="hint false" (click)="clickFalse()">F</div>
-        <!-- <button class="false" (click)="clickFalse()">F</button> -->
-        <mat-card appearance="outlined" class="game-card"
-        cdkDrag cdkDragLockAxis="x" [style.transform]="dragTransform" (cdkDragMoved)="dragMoved($event)"
-        (cdkDragEnded)="dragEnd($event)">
-            <mat-card-content class="vcenter">{{currentStatmentString}}</mat-card-content>
-        </mat-card>
-        <div class="hint true" (click)="clickTrue()">R</div>
-        <!-- <button class="true" (click)="clickTrue()">R</button> -->
-    </div>
-    <div class="bottom">Kvar: {{numberOfStatementsLeft()}}</div>
+    <header class="top">
+        <span class="score score--correct">Rätt {{nrCorrect}}</span>
+        <span class="score score--wrong">Fel {{nrWrong}}</span>
+    </header>
+
+    @if (finished) {
+        <section class="result">
+            <mat-card appearance="outlined" class="game-card result-card">
+                <p class="result-title">Klart!</p>
+                <p class="result-score">{{nrCorrect}} av {{totalAnswered}} rätt</p>
+                <button type="button" class="again" (click)="restart()">Spela igen</button>
+            </mat-card>
+        </section>
+    } @else {
+        <section class="main">
+            <button type="button" class="hint hint--false" (click)="answer(false)"
+                [style.opacity]="0.55 + 0.45 * strength(-1)" [disabled]="locked"
+                aria-label="Svara att påståendet är fel">F</button>
+
+            <div class="card-slot" cdkDrag cdkDragLockAxis="x" [cdkDragDisabled]="locked"
+                [class.is-instant]="instant" (cdkDragMoved)="dragMoved($event)"
+                (cdkDragEnded)="dragEnd($event)">
+                <mat-card appearance="outlined" class="game-card"
+                    [class.game-card--leaving-right]="leaving === 1"
+                    [class.game-card--leaving-left]="leaving === -1"
+                    [style.transform]="leaving ? null : 'rotate(' + rotation + 'deg)'">
+                    <span class="stamp stamp--false" [style.opacity]="strength(-1)">FEL</span>
+                    <span class="stamp stamp--true" [style.opacity]="strength(1)">RÄTT</span>
+                    <span class="statement">{{currentStatmentString}}</span>
+                </mat-card>
+            </div>
+
+            <button type="button" class="hint hint--true" (click)="answer(true)"
+                [style.opacity]="0.55 + 0.45 * strength(1)" [disabled]="locked"
+                aria-label="Svara att påståendet är rätt">R</button>
+        </section>
+    }
+
+    <footer class="bottom" aria-live="polite">
+        @if (feedback) {
+            <span class="feedback" [class.feedback--wrong]="!feedback.correct">
+                @if (feedback.correct) { Rätt! } @else { Fel — {{feedback.solution}} }
+            </span>
+        } @else {
+            Kvar: {{numberOfStatementsLeft()}}
+        }
+    </footer>
 </div>
