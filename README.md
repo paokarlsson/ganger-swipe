@@ -1,3 +1,7 @@
+> **Flyttad.** Svep-spelet bor numera i [paokarlsson/ganger](https://github.com/paokarlsson/ganger),
+> där startskärmen låter dig välja mellan *Para ihop* och *Svep*. Det här
+> repot utvecklas inte vidare — gör ändringarna i `ganger` i stället.
+
 # MathTeacher
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
