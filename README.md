@@ -25,3 +25,15 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Deploy
+
+Sajten ligger på GitHub Pages: https://paokarlsson.github.io/ganger-swipe/
+
+Deployen sker automatiskt via `.github/workflows/deploy.yml` vid varje push till
+`main` (och kan köras manuellt med "Run workflow"). Workflowen kör `npm ci` och
+`npm run build`, och publicerar `dist/math-teacher/browser`.
+
+Kräver att **Settings → Pages → Source** står på **GitHub Actions**. Den gamla
+metoden — att bygga lokalt och checka in resultatet i `docs/` — behövs inte
+längre när det är omställt.
